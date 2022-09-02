@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable} from 'rxjs';
+import { Observable, of} from 'rxjs';
 import { InteractionService } from '../http/interaction.service';
 import { environment } from '../../environments/environment';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Emergency } from '../models/emergency.model';
 
 @Injectable({ 
@@ -19,6 +19,10 @@ export class EmergencyService {
       }),
       tap((response: Emergency[]) => {
         console.log(response);
+      }),
+      catchError(error => {
+        console.log("error occured" + error);
+        return of([]);
       })
     );
   }
