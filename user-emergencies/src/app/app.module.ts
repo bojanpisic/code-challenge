@@ -11,11 +11,13 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { EmergencyService } from './services/emergency.service';
 import {TableModule} from 'primeng/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmergenciesListComponent } from './components/emergencies/emergencies-list/emergencies-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmergenciesComponent
+    EmergenciesComponent,
+    EmergenciesListComponent
   ],
   imports: [
     BrowserModule,

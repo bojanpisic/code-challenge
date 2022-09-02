@@ -1,54 +1,5 @@
-<div *ngIf="emergencies$ | async as emergencies; else loading">
-  <p-table
-    #table
-    [value]="emergencies"
-    [paginator]="true"
-    [rows]="5"
-    (sortFunction)="customSort($event)"
-    [customSort]="true"
-    [globalFilterFields]="[
-      'device.serialNumber',
-      'holder.firstName',
-      'holder.lastName'
-    ]"
-  >
-    <ng-template pTemplate="caption">
-      <div class="table-header">
-        <span class="header-title">Emergencies</span>
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input
-            type="text"
-            class="p-inputtext p-component p-element"
-            (input)="filter($event, table)"
-            placeholder="Search.."
-          />
-        </span>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th>EmergencyID</th>
-        <th pSortableColumn="requestTime">
-          Request time
-          <p-sortIcon field="requestTime"></p-sortIcon>
-        </th>
-        <th>Device Serial Number</th>
-        <th>First name</th>
-        <th>Last name</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-emergency>
-      <tr>
-        <td>{{ emergency.emergency.emergencyId }}</td>
-        <td>
-          {{ emergency.emergency.requestTime | date: "dd/MM/yyyy hh:mm:ss" }}
-        </td>
-        <td>{{ emergency.device.serialNumber }}</td>
-        <td>{{ emergency.holder.firstName }}</td>
-        <td>{{ emergency.holder.lastName }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-<ng-template #loading> </ng-template>
+<app-emergencies-list
+  [emergencies$]="emergencies$"
+  (sortEvent)="customSort($event)"
+  (filterEvent)="filter($event)"
+></app-emergencies-list>

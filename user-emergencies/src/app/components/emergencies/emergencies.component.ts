@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SortEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { Emergency } from 'src/app/models/emergency.model';
+import { EmergencyService } from '../../services/emergency.service';
 
 @Component({
   selector: 'app-emergencies',
@@ -10,11 +11,12 @@ import { Emergency } from 'src/app/models/emergency.model';
   styleUrls: ['./emergencies.component.scss']
 })
 export class EmergenciesComponent implements OnInit {
-  @Input() emergencies$: Observable<Emergency[]> | undefined;
+  emergencies$: Observable<Emergency[]>;
   
-  constructor() { }
+  constructor(private emergencyService: EmergencyService) {}
 
   ngOnInit(): void {
+    this.emergencies$ = this.emergencyService.getAllEmergencies();
   }
 
   customSort(event: SortEvent) {
@@ -27,7 +29,7 @@ export class EmergenciesComponent implements OnInit {
     });
   }
 
-  filter(event: any, ref: Table) {
-    ref.filterGlobal(event.target.value, 'contains')
+  filter(prop: {event: any, ref: Table}) {
+    prop.ref.filterGlobal(prop.event.target.value, 'contains')
   }
 }
